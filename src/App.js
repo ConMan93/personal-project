@@ -41,7 +41,7 @@ class App extends Component {
     return ( this.state.isLoading ?
       <div></div>
       :
-      <StripeProvider apiKey="pk_test_pX9CzSHms649fCkq1xdWw41l" >
+      <StripeProvider apiKey={process.env.REACT_APP_STRIPE_API_KEY} >
         <HashRouter>
           <div style={{ height: '100vh', width: '100vw' }} className='body'>
             <Header />

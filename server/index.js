@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const massive = require('massive');
 const session = require('express-session');
-const stripe = require("stripe")("sk_test_tX0IjF2tjC8N2PjsBgW8STNS");
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const cc = require('./controllers/cartController');
 const ac = require('./controllers/authController');
 require('dotenv').config();
