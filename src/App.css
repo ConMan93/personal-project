@@ -30,3 +30,22 @@
     transform: rotate(360deg);
   }
 }
+
+.body {
+  /* background-image: url('http://images6.fanpop.com/image/photos/38900000/Dark-Souls-2-thriller-roleplay-38982676-1920-1080.jpg'); */
+  background-color: #4B4F50;
+  background-size: cover;
+  overflow: scroll;
+}
+
+button {
+  outline: none;
+}
+button:active {
+  /* box-shadow: 0 5px #666; */
+  transform: translateY(4px);
+}
+
+select {
+  outline: none;
+}

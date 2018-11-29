@@ -1,0 +1,124 @@
+.payment-form {
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+.total-form {
+    /* color: white; */
+    margin-top: 80px;
+    margin-left: 20px;
+    /* border: 2px solid black; */
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    width: 300px;
+    max-width: 300px;
+}
+
+.total-form-content {
+    border-top: 1px solid black;
+    margin-top: 10px;
+}
+
+.checkout {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    background-color: #fff;
+    margin-top: 80px;
+    border-radius: 5px;
+    padding: 20px;
+    max-height: 360px;
+}
+
+p {
+    margin: 5px 0;
+}
+
+.card-input {
+    background-color: rgb(250, 255, 189);
+    margin-bottom: 20px;
+    height: 15px;
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 16px;
+    box-shadow: 0 2px 3px #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+.StripeElement--focus {
+    box-shadow: 0 2px 3px #cfd7df;
+}
+.StripeElement--invalid {
+    border-color: #fa755a;
+}
+.error-message {
+    font-size: 16px;
+    color: red;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+
+.card-exp {
+    width: 80px;
+}
+
+.card-cvc {
+    width: 80px;
+}
+
+.exp-cvc-form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-zip {
+    width: 90px;
+}
+
+.purchase-btn { 
+    padding: 6px 38px;
+    background: transparent;
+    border: 1px solid grey;
+    border-radius: 3px;
+    font-size: 16px;
+    width: 200px;
+}
+.purchase-btn:hover {
+    background-color: crimson;
+    color: white;
+    border: 1px solid crimson;
+}
+
+
+.complete {
+    text-align: center;
+    color: white;
+}
+
+.purchase-header {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.error-message-div {
+    width: 400px;
+    background-color: #ffdce0;
+    color: #86181d;
+    margin: 10px auto;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.error-button {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+}

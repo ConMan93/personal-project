@@ -1,0 +1,72 @@
+.register-form {
+    display: flex;
+    margin: 40px auto;
+    width: 400px;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 12px;
+    margin-top: 80px;
+    background: #fff;
+}
+
+.form-header {
+    text-align: center;
+}
+
+.input-div {
+    margin-bottom: 18px;
+    box-sizing: border-box;
+}
+
+.input-header {
+    margin: 0;
+}
+
+.register-input {
+    background-color: rgb(250, 255, 189);
+    box-sizing: border-box;
+    height: 35px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    width: 90%;
+    font-size: 18px;
+    border-radius: 3px;
+    outline: none;
+}
+
+.register-btn {
+    padding: 6px 38px;
+    background: transparent;
+    border: 1px solid grey;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.register-btn:hover {
+    background-color: crimson;
+    color: white;
+    border: 1px solid crimson;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+.error-message-div {
+    width: 400px;
+    background-color: #ffdce0;
+    color: #86181d;
+    margin: 0 auto 10px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.error-button {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+}
