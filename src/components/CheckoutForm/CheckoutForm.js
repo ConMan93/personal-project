@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { CardNumberElement, CardExpiryElement, CardCVCElement, PostalCodeElement, injectStripe } from 'react-stripe-elements';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { getCart } from '../../redux/reducer';
 import './CheckoutForm.css';
 
 class CheckoutForm extends Component {
@@ -24,6 +26,7 @@ class CheckoutForm extends Component {
       })
     })
     axios.get('/api/cart').then( response => {
+      this.props.getCart(response.data)
       this.setState({
         cart: response.data
       })
@@ -54,6 +57,8 @@ class CheckoutForm extends Component {
         errorMessage: 'Invalid payment information!'
       })
     }
+
+    this.componentDidMount()
 
   }
 
@@ -112,4 +117,4 @@ class CheckoutForm extends Component {
   }
 }
 
-export default injectStripe(CheckoutForm);
+export default connect(null, { getCart })(injectStripe(CheckoutForm));

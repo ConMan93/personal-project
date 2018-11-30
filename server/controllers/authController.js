@@ -13,8 +13,12 @@ module.exports = {
                 return res.status(409).send('Username must be 4 or more characters long.')
             }
 
-            if (!email.includes('@') && !email.includes('.')) {
+            if (!email.includes('@') || !email.includes('.')) {
                 return res.status(409).send('Email must be in format "youremail@email.com/net/etc."')
+            }
+
+            if (password.length < 5) {
+                return res.status(409).send('Password must be at least 5 characters long')
             }
 
             let userResponse = await db.getUserByEmail(email)

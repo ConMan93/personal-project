@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite';
+import { getCart } from '../../redux/reducer';
+import { connect } from 'react-redux';
 
 
 class Cart extends Component {
@@ -16,6 +18,7 @@ class Cart extends Component {
 
     componentDidMount() {
         axios.get('/api/cart').then( response => {
+            this.props.getCart(response.data)
             this.setState({
                 cart: response.data
             })
@@ -27,6 +30,7 @@ class Cart extends Component {
             this.setState({
                 cart: response.data
             })
+            this.componentDidMount()
         })
     }
 
@@ -36,6 +40,7 @@ class Cart extends Component {
             this.setState({
                 cart: response.data
             })
+            this.componentDidMount()
         })
     }
 
@@ -179,4 +184,4 @@ const styles = StyleSheet.create({
     
 })
 
-export default Cart
+export default connect(null, { getCart })(Cart)

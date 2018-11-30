@@ -7,6 +7,7 @@ const initialState = {
 const USER_LOGGED_IN = 'USER_LOGGED_IN';
 const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 const ADD_TO_CART = 'ADD_TO_CART';
+const GET_CART = 'GET_CART'
 
 export default function reducer ( state = initialState, action ) {
 
@@ -19,6 +20,9 @@ export default function reducer ( state = initialState, action ) {
             return {...state, isAuthenticated: false, user: {}}
 
         case ADD_TO_CART:
+            return {...state, cart: action.payload}
+
+        case GET_CART:
             return {...state, cart: action.payload}
 
         default:
@@ -44,5 +48,12 @@ export function addGameToCart(games) {
     return {
         type: ADD_TO_CART,
         payload: games
+    }
+}
+
+export function getCart(cart) {
+    return {
+        type: GET_CART,
+        payload: cart
     }
 }

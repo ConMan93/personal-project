@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import mithril from 'mithril';
-import { addGameToCart } from '../../redux/reducer';
+import { addGameToCart, getCart } from '../../redux/reducer';
 import './HomePage.css';
 
 import VideoGame from '../VideoGame/VideoGame';
@@ -36,6 +36,10 @@ class HomePage extends Component {
             })
         })
 
+        axios.get('/api/cart').then( response => {
+            this.props.getCart(response.data)
+        })
+
     }
 
     handleOptionChange = (input) => {
@@ -59,7 +63,7 @@ class HomePage extends Component {
 
     addToCart = (game) => {
         axios.post('/api/cart', game).then( response => {
-            this.props.addGameToCart(response.data)
+            
         })
 
     }
@@ -70,7 +74,6 @@ class HomePage extends Component {
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&sort=id:desc&offset=${this.state.offset}&platforms=${this.state.consoleFilter}`,
             callbackKey: "json_callback",
         }).then( response => {
-            console.log(response)
             this.setState({
                 games: response.results,
                 offset: this.state.offset + 20,
@@ -86,7 +89,6 @@ class HomePage extends Component {
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&sort=id:desc&filter=platforms:${this.state.consoleFilter},name:${this.state.searchName}&limit=20`,
             callbackKey: "json_callback",
         }).then( response => {
-            console.log(response)
             this.setState({
                 games: response.results,
                 totalResults: response.number_of_total_results
@@ -101,7 +103,6 @@ class HomePage extends Component {
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&sort=id:desc&filter=name:${this.state.searchName}&limit=20`,
             callbackKey: "json_callback",
         }).then( response => {
-            console.log(response)
             this.setState({
                 games: response.results,
                 searchName: '',
@@ -205,4 +206,4 @@ class HomePage extends Component {
     }
 }
 
-export default connect(null, { addGameToCart })(HomePage)
+export default connect(null, { addGameToCart, getCart })(HomePage)

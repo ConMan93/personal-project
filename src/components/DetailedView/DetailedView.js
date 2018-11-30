@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import mithril from 'mithril';
 import { connect } from 'react-redux';
-import { addGameToCart } from '../../redux/reducer';
+import { addGameToCart, getCart } from '../../redux/reducer';
 import './DetailedView.css';
 
 class DetailedView extends Component {
@@ -22,24 +22,27 @@ class DetailedView extends Component {
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&filter=id:${id}`,
             callbackKey: "json_callback",
         }).then( response => {
-            console.log(response)
             this.setState({
                 game: response.results
             })
         })
+
+        axios.get('/api/cart').then( response => {
+            this.props.getCart(response.data)
+        })
+
     }
 
     addToCart = (game) => {
         axios.post('/api/cart', { imgurl: game.image.medium_url, name: game.name, game_id: game.guid }).then( response => {
-            this.props.addGameToCart(response.data)
+            // this.props.addGameToCart(response.data)
+            this.componentDidMount()
         })
 
     }
 
     render() {
-        console.log(this.state.game)
         let gameToRender = this.state.game.map( (game, i) => {
-            console.log(game)
             return (
                 <div key={ i } className='game'>
                     <div className='game-image'>
@@ -78,4 +81,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { addGameToCart })(DetailedView)
+export default connect(mapStateToProps, { addGameToCart, getCart })(DetailedView)

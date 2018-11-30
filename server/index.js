@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const massive = require('massive');
@@ -5,7 +6,6 @@ const session = require('express-session');
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const cc = require('./controllers/cartController');
 const ac = require('./controllers/authController');
-require('dotenv').config();
 const app = express();
 
 const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING } = process.env;

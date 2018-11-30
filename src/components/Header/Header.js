@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { userLoggedOut } from '../../redux/reducer';
+import { userLoggedOut, getCart } from '../../redux/reducer';
 import axios from 'axios';
 import './Header.css';
 
@@ -16,6 +16,12 @@ class Header extends Component {
         }
     }
 
+    componentDidMount() {
+        axios.get('/api/cart').then( response => {
+            this.props.getCart(response.data)
+        })
+    }
+
 
     userLoggedOut = () => {
         axios.get('/auth/logout').then( response => {
@@ -25,7 +31,7 @@ class Header extends Component {
 
     render() {
 
-        let total = this.state.cart.reduce((acc, cv) => {
+        let total = this.props.cart.reduce((acc, cv) => {
             return acc + cv.quantity}, 0)
         
         return (
@@ -37,7 +43,7 @@ class Header extends Component {
                 <div style={{display: 'flex', justifyContent: 'space-between', width: '55%', alignItems: 'center'}}>
                     <p className='user-greeting'>Hello, {this.props.user.username}</p>
                     <div className='nav-items'>
-                        <Link to='/cart' className='nav-item' style={{ textDecoration: 'none' }}><i className="fas fa-shopping-cart"> []</i></Link>
+                        <Link to='/cart' className='nav-item' style={{ textDecoration: 'none' }}><i className="fas fa-shopping-cart"> [{total}]</i></Link>
                         <Link to='/'><button onClick={this.userLoggedOut} className='nav-item'>Logout</button></Link>
                     </div>
                 </div>
@@ -62,4 +68,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { userLoggedOut })(Header)
+export default connect(mapStateToProps, { userLoggedOut, getCart })(Header)
