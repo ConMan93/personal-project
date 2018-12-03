@@ -30,6 +30,7 @@
     border-radius: 5px;
     padding: 20px;
     max-height: 360px;
+    box-shadow: 3px 3px 4px black;
 }
 
 p {
@@ -82,7 +83,8 @@ p {
 
 .purchase-btn { 
     padding: 6px 38px;
-    background: transparent;
+    background: #1D1F20;
+    color: white;
     border: 1px solid grey;
     border-radius: 3px;
     font-size: 16px;
@@ -115,10 +117,47 @@ p {
     display: flex;
     justify-content: space-between;
     border-radius: 5px;
+    border: 1px solid black;
+    text-align: center;
 }
 
 .error-button {
     background: transparent;
     border: none;
     font-size: 16px;
+}
+
+.loader {
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid crimson;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.payment-complete {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: auto;
+    align-items: center;
+}
+
+.home-button {
+    padding: 6px 24px;
+    border: 1px solid grey;
+    background: #1D1F20;
+    color: white;
+    border-radius: 3px;
+    font-size: 16px; 
+}
+.home-button:hover {
+    background-color: crimson;
+    color: white;
+    border: 1px solid crimson;
 }

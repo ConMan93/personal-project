@@ -16,12 +16,17 @@ class Header extends Component {
         }
     }
 
+    
     componentDidMount() {
-        axios.get('/api/cart').then( response => {
-            this.props.getCart(response.data)
-        })
+        if (this.props.isAuthenticated) {
+            axios.get('/api/cart').then( response => {
+                this.props.getCart(response.data)
+            }).catch(error => {
+                
+            })
+        }
+        
     }
-
 
     userLoggedOut = () => {
         axios.get('/auth/logout').then( response => {

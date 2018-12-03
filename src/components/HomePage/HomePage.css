@@ -45,7 +45,7 @@
 .filter-options {
     margin-left: 50px;
     width: 30%;
-    height: 400px;
+    height: 250px;
     padding: 10px;
     background-color: #1D1F20;
     border-radius: 5px;
@@ -76,7 +76,8 @@
     background-color: #394046;
     color: #d0d1d2;
     border: 1px solid #0b0d0e;
-    height: 25px;
+    height: 35px;
+    font-size: 14px;
 }
 
 .filter-button-div {
@@ -95,11 +96,12 @@
 }
 
 .next-button {
-    padding: 6px 20px;
-    background: white;
+    padding: 4px 10px;
+    background: #1D1F20;
+    color: white;
     border: 1px solid black;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 10px;
     margin-top: 20px;
 }
 .next-button:hover {
@@ -117,6 +119,10 @@
     color: white;
     background: #394046;
     outline: none;
+}
+
+select > option {
+    background-color: crimson;
 }
 
 

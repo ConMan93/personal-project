@@ -13,8 +13,10 @@ class Register extends Component {
         this.state = {
             email: '',
             password: '',
+            confirmPassword: '',
             username: '',
-            errorMessage: ''
+            errorMessage: '',
+            loading: false
         }
     }
 
@@ -23,6 +25,12 @@ class Register extends Component {
         this.setState({
             [name]: value
         })
+    }
+
+    handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            this.handleClick()
+        }
     }
 
     handleErrorClick = () => {
@@ -54,41 +62,57 @@ class Register extends Component {
                     <h2 className='form-header' style={{ margin: 0 }}>Register</h2>
 
                     <div className='input-div'>
-                        <h2 className='input-header'>Username</h2>
+                        <h3 className='input-header'>Username</h3>
                         <input 
                         name='username'
                         value={this.state.username}
-                        
+                        onKeyPress={this.handleKeyPress}
                         onChange={this.handleChange}
                         className='register-input'
                         />
                     </div>
 
                     <div className='input-div'>
-                        <h2 className='input-header'>Email</h2>
+                        <h3 className='input-header'>Email</h3>
                         <input 
                         name='email'
                         value={this.state.email}
-                        
+                        onKeyPress={this.handleKeyPress}
                         onChange={this.handleChange}
                         className='register-input'
                         />
                     </div>
 
                     <div className='input-div'>
-                        <h2 className='input-header'>Password</h2>
+                        <h3 className='input-header'>Password</h3>
                         <input 
                         name='password'
                         value={this.state.password}
-                        
+                        onKeyPress={this.handleKeyPress}
                         onChange={this.handleChange}
                         className='register-input'
+                        type='password'
                         />
                     </div>
 
+                    <div className='input-div'>
+                        <h3 className='input-header'>Confirm password</h3>
+                        <input 
+                        name='confirmPassword'
+                        value={this.state.confirmPassword}
+                        onKeyPress={this.handleKeyPress}
+                        onChange={this.handleChange}
+                        className='register-input'
+                        type='password'
+                        />
+                    </div>
+                    
+                    {this.state.loading ?
+                    <div className='loader'></div>
+                    :
                     <div>
                         <button onClick={this.handleClick} className='register-btn'>Submit</button>
-                    </div>
+                    </div>}
 
                     <p style={{ marginTop: 20 }}>Already have an account? <Link to='/login'>Log in</Link></p>
 

@@ -8,6 +8,7 @@
     padding: 12px;
     margin-top: 80px;
     background: #fff;
+    box-shadow: 2px 2px 3px black;
 }
 
 .form-header {
@@ -33,6 +34,12 @@
     font-size: 18px;
     border-radius: 3px;
     outline: none;
+    box-shadow: 1px 2px 3px #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+.register-input:focus {
+    box-shadow: 1px 2px 3px #cfd7df;
 }
 
 .register-btn {
@@ -63,10 +70,25 @@
     display: flex;
     justify-content: space-between;
     border-radius: 5px;
+    border: 1px solid black;
+    text-align: center;
 }
 
 .error-button {
     background: transparent;
     border: none;
     font-size: 16px;
+}
+
+.loader {
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid crimson;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

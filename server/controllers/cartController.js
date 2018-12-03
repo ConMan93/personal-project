@@ -20,11 +20,19 @@ module.exports = {
     addToCart: async (req, res) => {
 
         try {
-            
+
+
             let db = req.app.get('db')
-            let { game_id, imgurl, name } = req.body
+            let { price } = req.body
+            
+            let { game_id, imgurl, name } = req.body.game
+            if (req.body.game.image) {
+                game_id = req.body.game.guid
+                imgurl = req.body.game.image.small_url
+                name = req.body.game.name
+            }
+            
             let { id } = req.session.user
-            let price = 60
             let quantity = 1
 
             if (!req.session.user.cart_id) {
@@ -98,6 +106,28 @@ module.exports = {
             
         }
 
+    },
+
+    updateQuantityDropdown: async (req, res) => {
+
+        try {
+
+            let db = req.app.get('db')
+            let { id } = req.params
+            let { val } = req.body
+
+            let cart = await db.updateQuantityDropdown({ id, val })
+
+            id = req.session.user.id
+            let response = await db.getCart([+id])
+            res.send(response)
+
+        }
+        catch (error) {
+
+            console.log('there was an error updating quantity by drop down menu', error)
+
+        }
     }
 
 }

@@ -6,6 +6,7 @@ import { userLoggedIn } from '../../redux/reducer';
 import { StyleSheet, css } from 'aphrodite';
 
 
+
 class Login extends Component {
 
     constructor() {
@@ -65,7 +66,7 @@ class Login extends Component {
 
                     <h2 style={{ textAlign: 'center', margin: 0 }}>Log in</h2>
                     <div className={css(styles.inputDiv)}>
-                        <h2 className={css(styles.inputTitle)}>Email</h2>
+                        <h3 className={css(styles.inputTitle)}>Email</h3>
                         <input
                         name='email'
                         onKeyPress={this.handleKeyPress}
@@ -76,7 +77,7 @@ class Login extends Component {
                     </div>
 
                     <div className={css(styles.inputDiv)}>
-                        <h2 className={css(styles.inputTitle)}>Password</h2>
+                        <h3 className={css(styles.inputTitle)}>Password</h3>
                         <input
                         type='password'
                         name='password'
@@ -93,7 +94,7 @@ class Login extends Component {
                             Log in
                         </button>
                     </div>
-                    <p>Need an account? <Link to='/register'>Register</Link></p>
+                    <p>Need an account? <Link to='/register'>Register</Link> for free!</p>
                 </div>
             </div>
             )
@@ -111,7 +112,8 @@ const styles = StyleSheet.create({
         display: 'flex', 
         flexDirection: 'column', 
         padding: 12, 
-        marginTop: 80
+        marginTop: 80,
+        boxShadow: '2px 2px 3px black'
     },
 
     inputDiv: {
@@ -131,7 +133,13 @@ const styles = StyleSheet.create({
         borderRadius: 3, 
         border: '1px solid #ccc', 
         backgroundColor: 'rgb(250, 255, 189)',
-        outline: 'none'
+        outline: 'none',
+        boxShadow: '1px 2px 3px #e6ebf1',
+        '-webkit-transition': 'box-shadow 150ms ease',
+        transition: 'box-shadow 150ms ease',
+        ':focus': {
+            boxShadow: '1px 2px 3px #cfd7df'
+        }
     },
 
     loginButton: {
@@ -162,6 +170,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         borderRadius: '5px',
+        border: '1px solid black',
+        textAlign: 'center'
     },
 
     errorButton: {

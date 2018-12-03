@@ -11,7 +11,8 @@ class DetailedView extends Component {
         super();
 
         this.state = {
-            game: []
+            game: [],
+            developer: ''
         }
     }
 
@@ -22,35 +23,85 @@ class DetailedView extends Component {
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&filter=id:${id}`,
             callbackKey: "json_callback",
         }).then( response => {
+            console.log(response)
             this.setState({
                 game: response.results
             })
         })
 
-        axios.get('/api/cart').then( response => {
-            this.props.getCart(response.data)
+        if (this.props.isAuthenticated) {
+            axios.get('/api/cart').then( response => {
+                this.props.getCart(response.data)
+            })
+        }
+
+        mithril.jsonp({
+            url: `https://www.giantbomb.com/api/game/${id}/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp`,
+            callbackKey: "json_callback",
+        }).then( response => {
+            if (response.results.developers) {
+                this.setState({
+                    developer: response.results.developers[0].name
+                })
+            }
         })
 
     }
 
-    addToCart = (game) => {
-        axios.post('/api/cart', { imgurl: game.image.medium_url, name: game.name, game_id: game.guid }).then( response => {
-            // this.props.addGameToCart(response.data)
-            this.componentDidMount()
+    addToCart = (game, price) => {
+        console.log(game, price)
+        axios.post('/api/cart', { game, price: price }).then( response => {
+            
+            axios.get('/api/cart').then( response => {
+                this.props.getCart(response.data)
+            })
         })
 
     }
 
     render() {
+
+        let releaseDate = this.state.game.original_release_date
+        if (this.state.game.original_release_date) {
+            releaseDate = this.state.game.original_release_date.substring(0, 4)
+        }
+        let price = 0
+        if (releaseDate === null || releaseDate === undefined) {
+            price = 5
+        }
+        else if (+releaseDate <= 1980) {
+            price = 10
+        }
+        else if (+releaseDate >= 2018) {
+            price = 60
+        }
+        else if (+releaseDate >= 2015) {
+            price = 45
+        }
+        else if (+releaseDate >= 2010) {
+            price = 30
+        }
+        else if (+releaseDate >= 2005) {
+            price = 20
+        }
+        else if (+releaseDate > 1980 && +releaseDate < 2005) {
+            price = 12
+        }
+
         let gameToRender = this.state.game.map( (game, i) => {
+
             return (
                 <div key={ i } className='game'>
                     <div className='game-image'>
                         <h2 className='game-name'>{game.name}</h2>
                         <img src={`${game.image.medium_url}`} alt='' style={{ width: 250, height: 250}} />
-                        <p>Release Date: {game.original_release_date}</p>
+                        <p className='game-info'>Developed by: {this.state.developer}</p>
+                        <p className='game-info'>Release Date: {game.original_release_date}</p>
                         {this.props.isAuthenticated ?
-                        <button onClick={() => this.addToCart(game)} className='add-btn'>Add to cart</button>
+                        <div className='price-div'>
+                            <p className='price'>${price}</p>
+                            <button onClick={() => this.addToCart(game, price)} className='add-btn'>Add to cart</button>
+                        </div>
                         :
                         <div></div>}
                     </div>

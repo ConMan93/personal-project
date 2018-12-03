@@ -12,7 +12,8 @@ class Cart extends Component {
         super();
 
         this.state = {
-            cart: []
+            cart: [],
+            quantity: 1
         }
     }
 
@@ -46,11 +47,15 @@ class Cart extends Component {
 
     render() {
 
+        let grandTotal = this.state.cart.map( e => {
+            return +e.price * e.quantity})
+
         let cartToRender = this.state.cart.map( (game, i) => {
             let id = +game.game_id.substring(5)
 
         return (
             <div key={ i } className={css(styles.gameDiv)}>
+
                 <div className={css(styles.gameInfo)}>
                     <Link to={`/game/${id}`}><img src={`${game.imgurl}`} alt='' className={css(styles.gameImage)} /></Link>
                     <div className={css(styles.deleteBtnContainer)}>
@@ -63,15 +68,19 @@ class Cart extends Component {
                 </div>
                 <div>
                     <p className={css(styles.gameText)} style={{ textAlign: 'center'}}>{game.quantity}</p>
-                    <button onClick={() => this.updateQuantity(game.id, 1)} className={css(styles.button)}>+</button><button onClick={() => this.updateQuantity(game.id, -1)} className={css(styles.button)}>-</button>
+                    <button onClick={() => this.updateQuantity(game.id, 1)} className={css(styles.updateButton)}>+</button><button onClick={() => this.updateQuantity(game.id, -1)} className={css(styles.updateButton)}>-</button>
+        
                 </div>
             </div>
             )
         })
 
-        let total = this.state.cart.reduce((acc, cv) => {
-            return acc + cv.quantity}, 0)
-
+        let total = grandTotal.reduce((acc, cv) => {
+            return acc + cv}, 0)
+        let totalItems = this.state.cart.reduce( (acc, cv) => {
+            return acc + cv.quantity
+        }, 0)
+            
         return (
             <div className={css(styles.shoppingForm)}>
                 <div className={css(styles.productForm)}>
@@ -85,8 +94,11 @@ class Cart extends Component {
                     </div>
                 </div>
                 <div className={css(styles.totalForm)}>
-                    <h3 className={css(styles.gameText)}>Total ({total} items): ${total * 60}</h3>
-                    <Link to='/checkout'><button className={css(styles.checkoutBtn, styles.button)}>Proceed to checkout</button></Link>
+                    <h3 className={css(styles.gameText)}>Total ({totalItems} items): ${total}</h3>
+                    {this.state.cart.length < 1 ?
+                    <div style={{ color: 'red'}}>Nothing in shopping cart!</div>
+                    :
+                    <Link to='/checkout'><button className={css(styles.checkoutBtn, styles.button)}>Proceed to checkout</button></Link>}
                 </div>
 
             </div>
@@ -163,13 +175,22 @@ const styles = StyleSheet.create({
     deleteBtn: {
         width: 75,
         borderRadius: 3,
-        // marginLeft: 5
+        background: '#1D1F20',
+        color: 'white'
     },
 
     checkoutBtn: {
         width: '100%',
         padding: '6px 38px',
         borderRadius: 3,
+        background: '#1D1F20',
+        color: 'white'
+    },
+
+    updateButton: {
+        border: '1px solid black',
+        marginLeft: '2px',
+        marginRight: '2px'
     },
 
     button: {

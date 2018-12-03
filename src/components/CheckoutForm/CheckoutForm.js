@@ -3,6 +3,7 @@ import { CardNumberElement, CardExpiryElement, CardCVCElement, PostalCodeElement
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getCart } from '../../redux/reducer';
+import { Link } from 'react-router-dom';
 import './CheckoutForm.css';
 
 class CheckoutForm extends Component {
@@ -14,7 +15,7 @@ class CheckoutForm extends Component {
         user: {},
         cart: [],
         errorMessage: '',
-
+        loading: false
     }
     this.submit = this.submit.bind(this);
   }
@@ -43,18 +44,29 @@ class CheckoutForm extends Component {
   async submit(ev) {
 
     try {
-      let total = this.state.cart.reduce((acc, cv) => {
-        return acc + cv.quantity}, 0)
+      this.setState({
+        loading: true
+      })
+
+      let grandTotal = this.state.cart.map( e => {
+        return +e.price * e.quantity})
+
+      let total = grandTotal.reduce((acc, cv) => {
+        return acc + cv}, 0)
       
       let {token} = await this.props.stripe.createToken({name: `${this.state.user.username}`});
-      let response = await axios.post('/charge', {headers: {"Content-Type": "text/plain"}, data: {token: token.id}, amount: total * 60})
+      let response = await axios.post('/charge', {headers: {"Content-Type": "text/plain"}, data: {token: token.id}, amount: total})
       console.log(response)
 
+      this.setState({
+        loading: false
+      })
       if (response.status === 200) this.setState({ complete: true })
     }
     catch (error) {
       this.setState({
-        errorMessage: 'Invalid payment information!'
+        errorMessage: 'Invalid payment information!',
+        loading: false
       })
     }
 
@@ -63,8 +75,12 @@ class CheckoutForm extends Component {
   }
 
   render() {
-    let total = this.state.cart.reduce((acc, cv) => {
-      return acc + cv.quantity}, 0)
+
+    let grandTotal = this.state.cart.map( e => {
+      return +e.price * e.quantity})
+
+    let total = grandTotal.reduce((acc, cv) => {
+      return acc + cv}, 0)
 
     let gamesTotal = this.state.cart.map( (game, i) => {
       return (
@@ -74,7 +90,12 @@ class CheckoutForm extends Component {
       )
     })
 
-    if (this.state.complete) return <h1 className='complete'>Purchase Completed!</h1>
+    if (this.state.complete) return( 
+      <div className='payment-complete'>
+        <h1 className='complete'>Purchase Completed!</h1>
+        <Link to='/'><button className='home-button'>Continue Shopping</button></Link>
+      </div>
+      )
 
     return (
 
@@ -102,13 +123,16 @@ class CheckoutForm extends Component {
             </div>
             <p>Zip</p>
             <PostalCodeElement className='card-input card-zip' />
-            <button onClick={this.submit} className='purchase-btn' type='submit'>Purchase</button>
+            {this.state.loading ?
+            <div className='loader'></div>
+            :
+            <button onClick={this.submit} className='purchase-btn' type='submit'>Purchase</button>}
           </form>
 
           <div className='total-form'>
             <h3>Order Summary</h3>
             {gamesTotal}
-            <h3 style={{ color: 'crimson'}} className='total-form-content'>Order total: ${total * 60}</h3>
+            <h3 style={{ color: 'crimson'}} className='total-form-content'>Order total: ${total}</h3>
           </div>
 
         </div>

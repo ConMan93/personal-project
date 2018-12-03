@@ -7,7 +7,7 @@ module.exports = {
         try {
 
             let db = req.app.get('db')
-            let { username, email, password } = req.body
+            let { username, email, password, confirmPassword } = req.body
 
             if ( username.length <= 3) {
                 return res.status(409).send('Username must be 4 or more characters long.')
@@ -18,7 +18,11 @@ module.exports = {
             }
 
             if (password.length < 5) {
-                return res.status(409).send('Password must be at least 5 characters long')
+                return res.status(409).send('Password must be at least 5 characters long.')
+            }
+
+            if (password !== confirmPassword) {
+                return res.status(409).send('Passwords must match.')
             }
 
             let userResponse = await db.getUserByEmail(email)
