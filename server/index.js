@@ -12,6 +12,7 @@ const app = express();
 const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING } = process.env;
 
 app.use(bodyParser.json());
+app.use( express.static( `${__dirname}/../build` ) );
 app.use(session({
     secret: SESSION_SECRET,
     resave: true,
