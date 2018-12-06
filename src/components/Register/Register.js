@@ -40,11 +40,16 @@ class Register extends Component {
     }
 
     handleClick = () => {
+        this.setState({
+            loading: true
+        })
+
         axios.post('/auth/register', this.state).then( response => {
             this.props.userLoggedIn(response.data)
         }).catch( error => {
             this.setState({
-                errorMessage: error.response.data
+                errorMessage: error.response.data,
+                loading: false
             })
         })
     }
@@ -108,7 +113,7 @@ class Register extends Component {
                     </div>
                     
                     {this.state.loading ?
-                    <div className='loader'></div>
+                    <p className="saving"><span>.</span><span>.</span><span>.</span></p>
                     :
                     <div>
                         <button onClick={this.handleClick} className='register-btn'>Submit</button>

@@ -21,6 +21,10 @@ class Header extends Component {
         if (this.props.isAuthenticated) {
             axios.get('/api/cart').then( response => {
                 this.props.getCart(response.data)
+                this.setState({
+                    cart: response.data,
+                    retrievedCart: true
+                })
             }).catch(error => {
                 
             })
@@ -31,13 +35,15 @@ class Header extends Component {
     userLoggedOut = () => {
         axios.get('/auth/logout').then( response => {
             this.props.userLoggedOut()
+            this.props.history.push('/')
         })
     }
 
     render() {
-
-        let total = this.props.cart.reduce((acc, cv) => {
-            return acc + cv.quantity}, 0)
+        
+            let total = this.props.cart.reduce((acc, cv) => {
+                return acc + cv.quantity}, 0)
+        
         
         return (
             <div className='nav-bar' >
@@ -46,10 +52,10 @@ class Header extends Component {
                 </div>
                 {this.props.isAuthenticated ? 
                 <div style={{display: 'flex', justifyContent: 'space-between', width: '55%', alignItems: 'center'}}>
-                    <p className='user-greeting'>Hello, {this.props.user.username}</p>
+                    <p className='user-greeting'>Hello, <Link to={`/profile/${this.props.user.username}`} className='profile-link'>{this.props.user.username}</Link></p>
                     <div className='nav-items'>
                         <Link to='/cart' className='nav-item' style={{ textDecoration: 'none' }}><i className="fas fa-shopping-cart"> [{total}]</i></Link>
-                        <Link to='/'><button onClick={this.userLoggedOut} className='nav-item'>Logout</button></Link>
+                        <button onClick={this.userLoggedOut} className='nav-item'>Logout</button>
                     </div>
                 </div>
                 :

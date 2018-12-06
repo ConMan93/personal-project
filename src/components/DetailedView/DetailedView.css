@@ -40,11 +40,15 @@
 }
 
 .add-btn {
-    padding: 4px 8px;
-    background: white;
-    border: 1px solid black;
+    /* padding: 4px 8px; */
+    background: #394046;
+    color: white;
+    border: 1px solid #394046;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 10px;
+    width: 75px;
+    height: 25px;
+    margin-top: 5px;
 }
 .add-btn:hover {
     background-color: crimson;

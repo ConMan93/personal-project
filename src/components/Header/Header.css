@@ -45,3 +45,11 @@
     color: crimson;
     font-size: 20px;
 }
+
+.profile-link {
+    color: crimson;
+    font-size: 20px;
+}
+.profile-link:visited {
+    color: crimson;
+}

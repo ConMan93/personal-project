@@ -2,17 +2,19 @@
 module.exports = {
     
     getCart: async (req, res) => {
-
-        try {
-        let db = req.app.get('db')
-        let { id } = req.session.user
-
         
-        let cart = await db.getCart([id])
+        try {
+            let db = req.app.get('db')
+            let { id } = req.session.user
+            
+            let cart = await db.getCart([id])
+            res.send(cart)
 
-        res.send(cart)
         } catch(error) {
+
             console.log('there was an error getting cart', error)
+            res.send(error)
+
         }
 
     },
@@ -94,7 +96,6 @@ module.exports = {
                     let updatedCart = await db.getCart([+id])
                     return res.send(updatedCart)
                 }
-
 
             id = req.session.user.id
             let response = await db.getCart([+id])

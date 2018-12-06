@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { userLoggedIn } from '../../redux/reducer';
 import { StyleSheet, css } from 'aphrodite';
+import './Login.css';
 
 
 
@@ -15,7 +16,8 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            errorMessage: ''
+            errorMessage: '',
+            loading: false
         }
     }
 
@@ -33,15 +35,23 @@ class Login extends Component {
     }
 
     handleClick = () => {
+       
+        this.setState({
+            loading: true
+        })
         axios.post('/auth/login', this.state).then( response => {
+            
             this.props.userLoggedIn(response.data)
             this.setState({
                 email: '',
                 password: '',
+                loading: false
             })
             }).catch(error => {
+               
                 this.setState({
-                    errorMessage: error.response.data
+                    errorMessage: error.response.data,
+                    loading: false
                 })
             })
         
@@ -54,6 +64,7 @@ class Login extends Component {
     }
 
     render() {
+        
         return ( this.props.isAuthenticated ?
             <Redirect to='/' />
             :
@@ -90,9 +101,12 @@ class Login extends Component {
                     </div>
 
                     <div>
+                        {this.state.loading ?
+                        <p className="saving"><span>.</span><span>.</span><span>.</span></p>
+                        :
                         <button onClick={this.handleClick} className={css(styles.loginButton)}>
                             Log in
-                        </button>
+                        </button>}
                     </div>
                     <p>Need an account? <Link to='/register'>Register</Link> for free!</p>
                 </div>
@@ -144,7 +158,8 @@ const styles = StyleSheet.create({
 
     loginButton: {
         padding: '6px 38px', 
-        background: 'transparent', 
+        background: '#1D1F20',
+        color: 'white', 
         border: '1px solid grey', 
         borderRadius: 3, 
         fontSize: 16,

@@ -20,12 +20,16 @@ class HomePage extends Component {
             consoleFilter: '',
             searchName: '',
             totalResults: '',
-            sortBy: ''
+            sortBy: '',
+            loading: false
         }
     }
 
     componentDidMount() {
 
+        this.setState({
+            loading: true
+        })
         mithril.jsonp({
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&sort=id:desc`,
             callbackKey: "json_callback",
@@ -33,13 +37,18 @@ class HomePage extends Component {
             console.log(response)
             this.setState({
                 games: response.results,
-                totalResults: response.number_of_total_results
+                totalResults: response.number_of_total_results,
+                loading: false,
+                searchName: ''
             })
         })
-        if (this.props.isAuthenticated)
-        axios.get('/api/cart').then( response => {
-            this.props.getCart(response.data)
-        })
+
+        if (this.props.isAuthenticated) {
+            
+            axios.get('/api/cart').then( response => {
+                this.props.getCart(response.data)
+            })
+        }
 
     }
 
@@ -79,14 +88,18 @@ class HomePage extends Component {
 
     nextPage = () => {
 
+        this.setState({
+            loading: true
+        })
         mithril.jsonp({
-            url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&sort=id:desc&offset=${this.state.offset}&filter=platforms:${this.state.consoleFilter}`,
+            url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&sort=id:desc&offset=${this.state.offset}&filter=platforms:${this.state.consoleFilter},name:${this.state.searchName}`,
             callbackKey: "json_callback",
         }).then( response => {
             this.setState({
                 games: response.results,
                 offset: this.state.offset + 20,
-                totalResults: response.number_of_total_results
+                totalResults: response.number_of_total_results,
+                loading: false
             })
         })
 
@@ -94,6 +107,9 @@ class HomePage extends Component {
 
     filter = () => {
     
+        this.setState({
+            loading: true
+        })
         mithril.jsonp({
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&sort=${this.state.sortBy}:asc&filter=platforms:${this.state.consoleFilter},name:${this.state.searchName}&limit=20`,
             callbackKey: "json_callback",
@@ -101,7 +117,8 @@ class HomePage extends Component {
             this.setState({
                 games: response.results,
                 totalResults: response.number_of_total_results,
-                sortBy: ''
+                sortBy: '',
+                loading: false
             })
         })
 
@@ -109,6 +126,9 @@ class HomePage extends Component {
 
     searchByName = () => {
     
+        this.setState({
+            loading: true
+        })
         mithril.jsonp({
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&sort=id:desc&filter=name:${this.state.searchName}&limit=20`,
             callbackKey: "json_callback",
@@ -116,8 +136,9 @@ class HomePage extends Component {
             console.log(response)
             this.setState({
                 games: response.results,
-                searchName: '',
-                totalResults: response.number_of_total_results
+                // searchName: '',
+                totalResults: response.number_of_total_results,
+                loading: false
             })
         })
     }
@@ -140,16 +161,7 @@ class HomePage extends Component {
         return (
         <div className='display-body'>
 
-            {/* <div class="view">
-                <div class="plane main">
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                </div>
-            </div> */}
+            
 
 
             <div className='games'>
@@ -160,14 +172,19 @@ class HomePage extends Component {
                 <div className='search-bar'>
                     <input onChange={e => this.handleSearchChange(e.target.value)} value={this.state.searchName} placeholder='Search games by title' onKeyPress={this.handleKeyPress} className='search-input' />
                     <button onClick={this.searchByName} className='search-button'><i className="fas fa-search" style={{ color: 'white'}}></i></button>
+                    <button onClick={() => this.componentDidMount()} className='reset-button'><i className="fas fa-sync-alt"></i></button>
                 </div>
+                {this.state.loading ?
+                <p className="loading"><span>.</span><span>.</span><span>.</span></p>
+                :
                 <div className='home'>
                     {gamesToRender}
-                </div>
+                </div>}
                 <div>
                     <button onClick={this.nextPage} className='next-button'>Next page ></button>
                 </div>
             </div>
+            
             <div className='filter-options'>
                 <h2 className='filter-header'>Filter Results</h2>
                 <div className='filter-dropdown-div'>
@@ -202,7 +219,9 @@ class HomePage extends Component {
                 <div className='filter-button-div'>
                     <button onClick={this.filter} className='filter-button'>Return matching games</button>
                 </div>
+
             </div>
+
         </div>)
     }
 }

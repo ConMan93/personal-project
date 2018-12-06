@@ -30,7 +30,7 @@
     height: 35px;
     padding: 8px 12px;
     border: 1px solid #ccc;
-    width: 90%;
+    width: 97%;
     font-size: 18px;
     border-radius: 3px;
     outline: none;
@@ -44,7 +44,8 @@
 
 .register-btn {
     padding: 6px 38px;
-    background: transparent;
+    color: white;
+    background: #1D1F20;
     border: 1px solid grey;
     border-radius: 3px;
     font-size: 16px;
@@ -80,7 +81,40 @@
     font-size: 16px;
 }
 
-.loader {
+@keyframes blink {
+    0% {
+      opacity: .2;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: .2;
+    }
+}
+
+.saving {
+    /* text-align: center; */
+    width: 15%;
+    padding: 0;
+}
+.saving span {
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    font-size: 40px;
+}
+
+.saving span:nth-child(2) {
+    animation-delay: .2s;
+}
+
+.saving span:nth-child(3) {
+    animation-delay: .4s;
+}
+
+/* .loader {
     border: 10px solid #f3f3f3;
     border-top: 10px solid crimson;
     border-radius: 50%;
@@ -91,4 +125,4 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
+} */

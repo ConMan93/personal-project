@@ -6,6 +6,7 @@ const session = require('express-session');
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const cc = require('./controllers/cartController');
 const ac = require('./controllers/authController');
+const uc = require('./controllers/userController')
 const app = express();
 
 const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING } = process.env;
@@ -16,6 +17,13 @@ app.use(session({
     resave: true,
     saveUninitialized: false
 }))
+app.use(`/s3`, require(`react-s3-uploader/s3router`)({
+    bucket: process.env.S3_BUCKET,
+    region: process.env.REGION, //optional
+    headers: {"Access-Control-Allow-Origin": "*"}, // optional
+    ACL: `public-read`, // this is default
+    uniquePrefix: true // (4.0.2 and above) default is true, setting the attribute to false preserves the original filename in S3
+  }));
 
 massive(CONNECTION_STRING).then( db => {
     app.set('db', db)
@@ -33,6 +41,11 @@ app.get('/api/cart', cc.getCart)
 app.post('/api/cart', cc.addToCart)
 app.put('/api/cart/:id', cc.updateQuantity)
 app.delete('/api/cart/:id', cc.deleteFromCart)
+
+// User
+app.put('/api/updateusername', uc.updateUsername)
+app.put('/api/updateimage', uc.updateUserImage)
+
 
 // Payment
 app.post('/charge', async (req, res) => {

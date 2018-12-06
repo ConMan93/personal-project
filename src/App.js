@@ -14,6 +14,7 @@ import Register from './components/Register/Register';
 import DetailedView from './components/DetailedView/DetailedView';
 import Cart from './components/Cart/Cart';
 import CheckoutForm from './components/CheckoutForm/CheckoutForm';
+import UserProfile from './components/UserProfile/UserProfile';
 
 class App extends Component {
 
@@ -44,17 +45,36 @@ class App extends Component {
       <StripeProvider apiKey={process.env.REACT_APP_STRIPE_API_KEY} >
         <HashRouter>
           <div style={{ height: '100vh', width: '100vw' }} className='body'>
-            <Header />
+            {/* <Header {...props}/>
             <Switch>
               <Route exact path='/' component={HomePage} />
               <Route path='/login' component={Login} />
               <Route path='/register' component={Register} />
               <Route path='/cart' component={Cart} />
               <Route path='/game/:id' component={DetailedView} />
+              <Route path='/profile/:id' component={UserProfile} />
               <Elements>
                 <Route path='/checkout' component={CheckoutForm} />
               </Elements>
-            </Switch>
+            </Switch> */}
+            <Route path="/" render={(props) => {
+              return (
+                <div>
+                  <Header {...props}/>
+                  <Switch>
+                    <Route exact path='/' component={HomePage} />
+                    <Route path='/login' component={Login} />
+                    <Route path='/register' component={Register} />
+                    <Route path='/cart' component={Cart} />
+                    <Route path='/game/:id' component={DetailedView} />
+                    <Route path='/profile/:id' component={UserProfile} />
+                    <Elements>
+                      <Route path='/checkout' component={CheckoutForm} />
+                    </Elements>
+                  </Switch>
+                </div>
+              )
+            }}/>
           </div>
         </HashRouter>
       </StripeProvider>

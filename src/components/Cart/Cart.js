@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite';
 import { getCart } from '../../redux/reducer';
 import { connect } from 'react-redux';
@@ -18,6 +18,7 @@ class Cart extends Component {
     }
 
     componentDidMount() {
+        
         axios.get('/api/cart').then( response => {
             this.props.getCart(response.data)
             this.setState({
@@ -50,11 +51,11 @@ class Cart extends Component {
         let grandTotal = this.state.cart.map( e => {
             return +e.price * e.quantity})
 
-        let cartToRender = this.state.cart.map( (game, i) => {
+        let cartToRender = this.state.cart.map( game => {
             let id = +game.game_id.substring(5)
 
         return (
-            <div key={ i } className={css(styles.gameDiv)}>
+            <div key={ game.id + '' } className={css(styles.gameDiv)}>
 
                 <div className={css(styles.gameInfo)}>
                     <Link to={`/game/${id}`}><img src={`${game.imgurl}`} alt='' className={css(styles.gameImage)} /></Link>
@@ -68,7 +69,7 @@ class Cart extends Component {
                 </div>
                 <div>
                     <p className={css(styles.gameText)} style={{ textAlign: 'center'}}>{game.quantity}</p>
-                    <button onClick={() => this.updateQuantity(game.id, 1)} className={css(styles.updateButton)}>+</button><button onClick={() => this.updateQuantity(game.id, -1)} className={css(styles.updateButton)}>-</button>
+                    <button onClick={() => this.updateQuantity(game.id, 1)} className={css(styles.updateButton, styles.button)}>+</button><button onClick={() => this.updateQuantity(game.id, -1)} className={css(styles.updateButton, styles.button)}>-</button>
         
                 </div>
             </div>
@@ -82,6 +83,7 @@ class Cart extends Component {
         }, 0)
             
         return (
+            this.props.isAuthenticated ?
             <div className={css(styles.shoppingForm)}>
                 <div className={css(styles.productForm)}>
                     <div className={css(styles.shoppingCartHeader, styles.gameText)}>
@@ -102,6 +104,8 @@ class Cart extends Component {
                 </div>
 
             </div>
+            :
+            <Redirect to='/' />
         )
     }
 }
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
         // borderRadius: 3,
         borderTop: '1px solid black',
         borderBottom: '1px solid black',
-        marginTop: 80
+        marginTop: 78
     },
 
     shoppingCartHeader: {
@@ -190,7 +194,10 @@ const styles = StyleSheet.create({
     updateButton: {
         border: '1px solid black',
         marginLeft: '2px',
-        marginRight: '2px'
+        marginRight: '2px',
+        background: '#1D1F20',
+        color: 'white',
+        fontSize: 12
     },
 
     button: {
@@ -205,4 +212,10 @@ const styles = StyleSheet.create({
     
 })
 
-export default connect(null, { getCart })(Cart)
+function mapStateToProps(state) {
+    return {
+        isAuthenticated: state.isAuthenticated
+    }
+}
+
+export default connect(mapStateToProps, { getCart })(Cart)

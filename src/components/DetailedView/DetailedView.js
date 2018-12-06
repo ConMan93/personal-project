@@ -12,7 +12,8 @@ class DetailedView extends Component {
 
         this.state = {
             game: [],
-            developer: ''
+            developer: '',
+            loading: true
         }
     }
 
@@ -25,7 +26,8 @@ class DetailedView extends Component {
         }).then( response => {
             console.log(response)
             this.setState({
-                game: response.results
+                game: response.results,
+                loading: false
             })
         })
 
@@ -49,7 +51,7 @@ class DetailedView extends Component {
     }
 
     addToCart = (game, price) => {
-        console.log(game, price)
+        
         axios.post('/api/cart', { game, price: price }).then( response => {
             
             axios.get('/api/cart').then( response => {
@@ -61,9 +63,14 @@ class DetailedView extends Component {
 
     render() {
 
-        let releaseDate = this.state.game.original_release_date
-        if (this.state.game.original_release_date) {
-            releaseDate = this.state.game.original_release_date.substring(0, 4)
+        let gameCopy = this.state.game.map( e => e.original_release_date)
+        
+        let releaseDate = gameCopy[0]
+        
+        if (!this.state.loading) {
+            if (releaseDate !== null && releaseDate !== undefined) {
+                releaseDate = releaseDate.substring(0, 4)
+            }
         }
         let price = 0
         if (releaseDate === null || releaseDate === undefined) {
@@ -89,14 +96,13 @@ class DetailedView extends Component {
         }
 
         let gameToRender = this.state.game.map( (game, i) => {
-
             return (
-                <div key={ i } className='game'>
+                <div key={ i } className='game' >
                     <div className='game-image'>
                         <h2 className='game-name'>{game.name}</h2>
                         <img src={`${game.image.medium_url}`} alt='' style={{ width: 250, height: 250}} />
                         <p className='game-info'>Developed by: {this.state.developer}</p>
-                        <p className='game-info'>Release Date: {game.original_release_date}</p>
+                        <p className='game-info'>Release Date: {game.original_release_date ? game.original_release_date.substring(0, 10) : 'No recorded release date'}</p>
                         {this.props.isAuthenticated ?
                         <div className='price-div'>
                             <p className='price'>${price}</p>
@@ -118,6 +124,7 @@ class DetailedView extends Component {
                 </div>
             )
         })
+        
         return (
             <div>
                 {gameToRender}
