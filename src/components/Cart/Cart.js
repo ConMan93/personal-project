@@ -118,7 +118,10 @@ const styles = StyleSheet.create({
 
     shoppingForm: {
         display: 'flex',
-        padding: 10
+        padding: 10,
+        '@media (max-width: 400px)': {
+            flexDirection: 'column'
+        }
     },
 
     totalForm: {
@@ -130,7 +133,11 @@ const styles = StyleSheet.create({
         // borderRadius: 3,
         borderTop: '1px solid black',
         borderBottom: '1px solid black',
-        marginTop: 78
+        marginTop: 78,
+        '@media (max-width: 400px)': {
+            position: 'relative',
+            marginLeft: '120px'
+        }
     },
 
     shoppingCartHeader: {
@@ -197,7 +204,11 @@ const styles = StyleSheet.create({
         marginRight: '2px',
         background: '#1D1F20',
         color: 'white',
-        fontSize: 12
+        fontSize: 12,
+        '@media (max-width: 400px)': {
+            marginTop: '10px',
+            fontSize: '14px'
+        }
     },
 
     button: {

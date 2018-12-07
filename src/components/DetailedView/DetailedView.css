@@ -77,3 +77,16 @@
     font-size: 18px;
     margin-right: auto;
 }
+
+@media (max-width: 400px) {
+    .game {
+        flex-direction: column;
+        justify-content: space-between;
+        height: 700px;
+    }
+
+    .game-description {
+        width: 360px;
+        margin: 0;
+    }
+}

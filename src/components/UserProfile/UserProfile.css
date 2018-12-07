@@ -111,3 +111,25 @@
 .uploading-true {
     justify-content: space-between;
 }
+
+.mobile-logout-button {
+    display: none;
+}
+
+@media (max-width: 400px) {
+
+    .profile-form {
+        width: 360px;
+    }
+
+    .mobile-logout-button {
+        display: initial;
+        color: white;
+        width: 75px;
+        font-size: 14px;
+        margin-top: 20px;
+        background: crimson;
+        border: 1px solid crimson;
+    }
+    
+}

@@ -49,3 +49,7 @@ button:active {
 select {
   outline: none;
 }
+
+@media (max-width: 400px) {
+  width: 370px;
+}

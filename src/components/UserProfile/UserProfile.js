@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import './UserProfile.css';
 import ReactS3Uploader from 'react-s3-uploader';
-import { updateUsername } from '../../redux/reducer';
+import { updateUsername, userLoggedOut } from '../../redux/reducer';
 
 class UserProfile extends Component {
 
@@ -89,6 +89,13 @@ class UserProfile extends Component {
         })
     }
 
+    userLoggedOut = () => {
+        axios.get('/auth/logout').then( response => {
+            this.props.userLoggedOut()
+            this.props.history.push('/')
+        })
+    }
+
     render() {
 
 
@@ -167,7 +174,7 @@ class UserProfile extends Component {
 
 
 
-                
+                <button className='logout-button mobile-logout-button' onClick={this.userLoggedOut}>Log out</button>
 
             </div>
         )
@@ -180,4 +187,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateUsername })(UserProfile)
+export default connect(mapStateToProps, { updateUsername, userLoggedOut })(UserProfile)

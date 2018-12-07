@@ -52,10 +52,10 @@ class Header extends Component {
                 </div>
                 {this.props.isAuthenticated ? 
                 <div style={{display: 'flex', justifyContent: 'space-between', width: '55%', alignItems: 'center'}}>
-                    <p className='user-greeting'>Hello, <Link to={`/profile/${this.props.user.username}`} className='profile-link'>{this.props.user.username}</Link></p>
+                    <p className='user-greeting'>Hello, </p><Link to={`/profile/${this.props.user.username}`} className='profile-link'>{this.props.user.username}</Link>
                     <div className='nav-items'>
                         <Link to='/cart' className='nav-item' style={{ textDecoration: 'none' }}><i className="fas fa-shopping-cart"> [{total}]</i></Link>
-                        <button onClick={this.userLoggedOut} className='nav-item'>Logout</button>
+                        <button onClick={this.userLoggedOut} className='nav-item logged-in'>Logout</button>
                     </div>
                 </div>
                 :

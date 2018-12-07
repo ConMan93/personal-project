@@ -44,7 +44,7 @@ class App extends Component {
       :
       <StripeProvider apiKey={process.env.REACT_APP_STRIPE_API_KEY} >
         <HashRouter>
-          <div style={{ height: '100vh', width: '100vw' }} className='body'>
+          <div style={{ height: '100vh', maxWidth: '1063', width: '1063' }} className='body'>
             {/* <Header {...props}/>
             <Switch>
               <Route exact path='/' component={HomePage} />

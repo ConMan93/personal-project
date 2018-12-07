@@ -9,12 +9,13 @@
 .display-body {
     display: flex;
     width: 100%;
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .games {
     width: 60%;
     padding: 5px;
+    margin-top: 20px;
 }
 
 .search-bar {
@@ -46,6 +47,7 @@
 }
 
 .filter-options {
+    margin-top: 20px;
     margin-left: 50px;
     width: 30%;
     height: 250px;
@@ -166,4 +168,54 @@
 
 .loading span:nth-child(3) {
     animation-delay: .4s;
+}
+
+@media (max-width: 400px) {
+
+    .display-body {
+        flex-direction: column;
+        width: 370px
+    }
+    .home {
+        flex-direction: column;
+    }
+    .search-input {
+        width: 200px;
+        margin-left: 20px;
+    }
+
+    .search-button {
+        display: none;
+    }
+
+    .filter-options {
+        display: none;
+    }
+
+    .search-bar {
+        width: 370px;
+    }
+
+    .home {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .body {
+        max-width: 370px;
+        width: 370px;
+    }
+
+    .nav-items {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .nav-item {
+        padding: 4px 28px;
+    }
+
+    .games {
+        width: 100%;
+    }
 }

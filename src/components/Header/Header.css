@@ -53,3 +53,22 @@
 .profile-link:visited {
     color: crimson;
 }
+
+@media (max-width: 400px) {
+    .nav-bar {
+        justify-content: space-between;
+    }
+
+    .logged-in {
+        display: none;
+    }
+
+    .user-greeting {
+        margin-left: 40px;
+        display: none;
+    }
+
+    .nav-item {
+        margin-right: 0;
+    }
+}
