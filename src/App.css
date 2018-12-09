@@ -50,6 +50,6 @@ select {
   outline: none;
 }
 
-@media (max-width: 400px) {
-  width: 370px;
-}
+/* @media (max-width: 450px) {
+  width: 100%;
+} */

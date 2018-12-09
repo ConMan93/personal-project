@@ -78,7 +78,7 @@
     margin-right: auto;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .game {
         flex-direction: column;
         justify-content: space-between;

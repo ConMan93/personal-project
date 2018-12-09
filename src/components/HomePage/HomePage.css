@@ -170,7 +170,7 @@
     animation-delay: .4s;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
 
     .display-body {
         flex-direction: column;

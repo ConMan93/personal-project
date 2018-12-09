@@ -116,7 +116,7 @@
     display: none;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
 
     .profile-form {
         width: 360px;
@@ -125,7 +125,7 @@
     .mobile-logout-button {
         display: initial;
         color: white;
-        width: 75px;
+        width: 120px;
         font-size: 14px;
         margin-top: 20px;
         background: crimson;

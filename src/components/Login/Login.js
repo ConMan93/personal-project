@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         padding: 12, 
         marginTop: 80,
         boxShadow: '2px 2px 3px black',
-        '@media (max-width: 400px)': {
+        '@media (max-width: 450px)': {
             width: '345px'
         }
     },

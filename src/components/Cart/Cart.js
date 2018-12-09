@@ -88,8 +88,8 @@ class Cart extends Component {
                 <div className={css(styles.productForm)}>
                     <div className={css(styles.shoppingCartHeader, styles.gameText)}>
                         <h2 style={{ width: 300}}>Shopping Cart</h2>
-                        <p>price</p>
-                        <p>Quantity</p>
+                        <p className={css(styles.mobile)}>price</p>
+                        <p className={css(styles.mobile)}>Quantity</p>
                     </div>
                     <div className={css(styles.gameContainer)}>
                         {cartToRender}
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     shoppingForm: {
         display: 'flex',
         padding: 10,
-        '@media (max-width: 400px)': {
+        '@media (max-width: 450px)': {
             flexDirection: 'column'
         }
     },
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         borderTop: '1px solid black',
         borderBottom: '1px solid black',
         marginTop: 78,
-        '@media (max-width: 400px)': {
+        '@media (max-width: 1199px)': {
             position: 'relative',
             marginLeft: '120px'
         }
@@ -158,7 +158,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 10,
         borderTop: '1px solid black',
-        height: 175
+        height: 175,
+        '@media (max-width: 450px)': {
+            width: '350px'
+        }
     },
 
     gameInfo: {
@@ -205,7 +208,7 @@ const styles = StyleSheet.create({
         background: '#1D1F20',
         color: 'white',
         fontSize: 12,
-        '@media (max-width: 400px)': {
+        '@media (max-width: 450px)': {
             marginTop: '10px',
             fontSize: '14px'
         }
@@ -219,6 +222,10 @@ const styles = StyleSheet.create({
             border: '1px solid crimson',
             color: 'white'
         }
+    },
+
+    mobile: {
+        display: 'none'
     }
     
 })

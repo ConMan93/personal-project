@@ -163,12 +163,16 @@ p {
     border: 1px solid crimson;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .payment-form {
         flex-direction: column-reverse;
     }
 
     .checkout {
         width: 330px;
+    }
+
+    .payment-complete {
+        width: 100%
     }
 }
