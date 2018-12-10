@@ -54,6 +54,12 @@
     color: crimson;
 }
 
+.cart-logo:hover {
+    background: transparent;
+    color: crimson;
+}
+
+
 @media (max-width: 450px) {
     .nav-bar {
         justify-content: space-between;
@@ -70,5 +76,6 @@
 
     .nav-item {
         margin-right: 0;
+        padding: 6px 19px;
     }
 }

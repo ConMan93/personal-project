@@ -125,11 +125,12 @@
     .mobile-logout-button {
         display: initial;
         color: white;
-        width: 120px;
+        width: 100px;
         font-size: 14px;
         margin-top: 20px;
         background: crimson;
         border: 1px solid crimson;
+        border-radius: 3px;
     }
     
 }

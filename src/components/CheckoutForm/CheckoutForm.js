@@ -85,7 +85,7 @@ class CheckoutForm extends Component {
     let gamesTotal = this.state.cart.map( (game, i) => {
       return (
         <div key={ i } className='total-form-content'>
-          <p>{game.name} x{game.quantity}</p>
+          <p>{game.name} x{game.quantity} <span className='game-price-total'>${game.price * game.quantity}</span></p>
         </div>
       )
     })

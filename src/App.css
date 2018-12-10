@@ -50,6 +50,21 @@ select {
   outline: none;
 }
 
-/* @media (max-width: 450px) {
-  width: 100%;
-} */
+.error-message-div {
+  width: 400px;
+  background-color: #ffdce0;
+  color: #86181d;
+  margin: 10px auto;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+@media (max-width: 450px) {
+  .error-message-div {
+    width: 300px;
+  }
+}

@@ -67,7 +67,7 @@ class Cart extends Component {
                 <div className={css(styles.gameText, styles.gamePrice)}>
                     <p>${game.price}</p>
                 </div>
-                <div>
+                <div className={css(styles.updateButtonDiv)}>
                     <p className={css(styles.gameText)} style={{ textAlign: 'center'}}>{game.quantity}</p>
                     <button onClick={() => this.updateQuantity(game.id, 1)} className={css(styles.updateButton, styles.button)}>+</button><button onClick={() => this.updateQuantity(game.id, -1)} className={css(styles.updateButton, styles.button)}>-</button>
         
@@ -210,7 +210,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         '@media (max-width: 450px)': {
             marginTop: '10px',
-            fontSize: '14px'
+            fontSize: '14px',
+            width: '35px'
         }
     },
 
@@ -224,8 +225,18 @@ const styles = StyleSheet.create({
         }
     },
 
+    updateButtonDiv: {
+        '@media (max-width: 450px)': {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+        }
+    },
+
     mobile: {
-        display: 'none'
+        '@media (max-width: 450px)': {
+            display: 'none'
+        }
     }
     
 })

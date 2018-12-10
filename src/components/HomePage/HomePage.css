@@ -173,7 +173,7 @@
 @media (max-width: 450px) {
 
     .display-body {
-        flex-direction: column;
+        flex-direction: column-reverse;
         width: 370px
     }
     .home {
@@ -189,7 +189,8 @@
     }
 
     .filter-options {
-        display: none;
+        margin: 20px auto;
+        width: 300px;
     }
 
     .search-bar {
@@ -212,10 +213,15 @@
     }
 
     .nav-item {
-        padding: 4px 28px;
+        margin-right: 10px;
+        padding: 4px 19px;
     }
 
     .games {
         width: 100%;
+    }
+
+    .reset-button {
+        border-radius: 3px;
     }
 }

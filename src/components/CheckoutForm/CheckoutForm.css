@@ -109,7 +109,7 @@ p {
     font-weight: 500;
 }
 
-.error-message-div {
+/* .error-message-div {
     width: 400px;
     background-color: #ffdce0;
     color: #86181d;
@@ -120,7 +120,7 @@ p {
     border-radius: 5px;
     border: 1px solid black;
     text-align: center;
-}
+} */
 
 .error-button {
     background: transparent;
@@ -161,6 +161,11 @@ p {
     background-color: crimson;
     color: white;
     border: 1px solid crimson;
+}
+
+.game-price-total {
+    float: right;
+    color: green;
 }
 
 @media (max-width: 450px) {

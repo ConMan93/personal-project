@@ -57,12 +57,12 @@
     border: 1px solid crimson;
 }
 
-.error-message {
+/* .error-message {
     color: red;
     font-size: 14px;
-}
+} */
 
-.error-message-div {
+/* .error-message-div {
     width: 400px;
     background-color: #ffdce0;
     color: #86181d;
@@ -73,7 +73,7 @@
     border-radius: 5px;
     border: 1px solid black;
     text-align: center;
-}
+} */
 
 .error-button {
     background: transparent;
@@ -131,4 +131,5 @@
     .register-form {
         width: 350px;
     }
+
 }

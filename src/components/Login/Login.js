@@ -189,7 +189,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderRadius: '5px',
         border: '1px solid black',
-        textAlign: 'center'
+        textAlign: 'center',
+        '@media (max-width: 450px)': {
+            width: '300px'
+        }
     },
 
     errorButton: {

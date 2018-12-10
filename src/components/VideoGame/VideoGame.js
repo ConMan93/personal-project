@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
             backgroundColor: 'crimson',
             color: 'white',
             border: '1px solid crimson'
+        },
+        '@media (max-width: 450px)': {
+            height: '25px'
         }
     }
 

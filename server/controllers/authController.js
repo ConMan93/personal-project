@@ -8,6 +8,7 @@ module.exports = {
 
             let db = req.app.get('db')
             let { username, email, password, confirmPassword } = req.body
+            email = email.toLowerCase()
 
             if ( username.length <= 3) {
                 return res.status(409).send('Username must be 4 or more characters long.')
@@ -54,6 +55,7 @@ module.exports = {
 
             let db = req.app.get('db')
             let { email, password } = req.body
+            email = email.toLowerCase()
 
             let userResponse = await db.getUserByEmail(email)
             let user = userResponse[0]

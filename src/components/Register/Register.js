@@ -60,7 +60,7 @@ class Register extends Component {
             :
             <div className='content'>
                 {this.state.errorMessage ?
-                <div className='error-message-div error-message'><p>{this.state.errorMessage}</p><button onClick={this.handleErrorClick} className='error-button'>X</button></div>
+                <div className='error-message-div'><p>{this.state.errorMessage}</p><button onClick={this.handleErrorClick} className='error-button'>X</button></div>
                 :
                 <div></div>}
                 <div className='register-form'>
