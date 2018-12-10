@@ -208,10 +208,12 @@ const styles = StyleSheet.create({
         background: '#1D1F20',
         color: 'white',
         fontSize: 12,
+        textAlign: 'center',
         '@media (max-width: 450px)': {
             marginTop: '10px',
             fontSize: '14px',
-            width: '35px'
+            width: '30px',
+            height: '30px'
         }
     },
 

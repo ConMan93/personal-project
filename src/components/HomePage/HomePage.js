@@ -16,12 +16,13 @@ class HomePage extends Component {
 
         this.state = {
             games: [],
-            offset: 20,
+            offset: 0,
             consoleFilter: '',
             searchName: '',
             totalResults: '',
             sortBy: '',
-            loading: false
+            loading: false,
+            searched: false
         }
     }
 
@@ -39,6 +40,7 @@ class HomePage extends Component {
                 games: response.results,
                 totalResults: response.number_of_total_results,
                 loading: false,
+                searched: false,
                 searchName: ''
             })
         })
@@ -88,16 +90,37 @@ class HomePage extends Component {
 
     nextPage = () => {
 
+        let offset = this.state.offset + 20
         this.setState({
             loading: true
         })
         mithril.jsonp({
-            url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&sort=id:desc&offset=${this.state.offset}&filter=platforms:${this.state.consoleFilter},name:${this.state.searchName}`,
+            url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&sort=${this.state.sortBy}:asc&offset=${offset}&filter=platforms:${this.state.consoleFilter},name:${this.state.searchName}`,
             callbackKey: "json_callback",
         }).then( response => {
             this.setState({
                 games: response.results,
-                offset: this.state.offset + 20,
+                offset: offset,
+                totalResults: response.number_of_total_results,
+                loading: false
+            })
+        })
+
+    }
+
+    previousPage = () => {
+
+        let offset = this.state.offset - 20
+        this.setState({
+            loading: true
+        })
+        mithril.jsonp({
+            url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&limit=20&sort=${this.state.sortBy}:asc&offset=${offset}&filter=platforms:${this.state.consoleFilter},name:${this.state.searchName}`,
+            callbackKey: "json_callback",
+        }).then( response => {
+            this.setState({
+                games: response.results,
+                offset: offset,
                 totalResults: response.number_of_total_results,
                 loading: false
             })
@@ -108,7 +131,8 @@ class HomePage extends Component {
     filter = () => {
     
         this.setState({
-            loading: true
+            loading: true,
+            searched: true
         })
         mithril.jsonp({
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&sort=${this.state.sortBy}:asc&filter=platforms:${this.state.consoleFilter},name:${this.state.searchName}&limit=20`,
@@ -127,7 +151,8 @@ class HomePage extends Component {
     searchByName = () => {
     
         this.setState({
-            loading: true
+            loading: true,
+            searched: true
         })
         mithril.jsonp({
             url: `https://www.giantbomb.com/api/games/?api_key=${process.env.REACT_APP_GIANT_BOMB_API_KEY}&format=jsonp&sort=id:desc&filter=name:${this.state.searchName}&limit=20`,
@@ -166,9 +191,16 @@ class HomePage extends Component {
 
             <div className='games'>
                 <p className='games-header'>{this.state.totalResults} Games</p>
+                {this.state.searched && +this.state.totalResults > 20 ?
                 <div>
-                    <button onClick={this.nextPage} className='next-button'>Next page ></button>
+                    <button onClick={this.nextPage} className='next-button'><i className="fas fa-forward"></i></button>
+                    {this.state.offset > 0 ?
+                    <button className='next-button' onClick={this.previousPage}><i className="fas fa-backward"></i></button>
+                    :
+                    <div></div>}
                 </div>
+                :
+                <div></div>}
                 <div className='search-bar'>
                     <input onChange={e => this.handleSearchChange(e.target.value)} value={this.state.searchName} placeholder='Search games by title' onKeyPress={this.handleKeyPress} className='search-input' />
                     <button onClick={this.searchByName} className='search-button'><i className="fas fa-search" style={{ color: 'white'}}></i></button>
@@ -180,9 +212,16 @@ class HomePage extends Component {
                 <div className='home'>
                     {gamesToRender}
                 </div>}
+                {this.state.searched && +this.state.totalResults > 20 ?
                 <div>
-                    <button onClick={this.nextPage} className='next-button'>Next page ></button>
+                    <button onClick={this.nextPage} className='next-button'><i className="fas fa-forward"></i></button>
+                    {this.state.offset > 0 ?
+                    <button className='next-button' onClick={this.previousPage}><i className="fas fa-backward"></i></button>
+                    :
+                    <div></div>}
                 </div>
+                :
+                <div></div>}
             </div>
             
             <div className='filter-options'>
