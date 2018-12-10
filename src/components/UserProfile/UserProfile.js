@@ -15,7 +15,8 @@ class UserProfile extends Component {
             editing: false,
             uploading: false,
             userName: '',
-            userImage: ''
+            userImage: '',
+            errorMessage: ''
         }
     }
 
@@ -60,6 +61,12 @@ class UserProfile extends Component {
         }
     }
 
+    handleErrorClick = () => {
+        this.setState({
+            errorMessage: ''
+        })
+    }
+
     updateUsername = (username) => {
         let { id } = this.state.user
         axios.put('/api/updateusername', { username, id }).then( response => {
@@ -72,6 +79,9 @@ class UserProfile extends Component {
             this.componentDidMount()
         }).catch(error => {
             console.log(error)
+            this.setState({
+                errorMessage: error.response.data
+            })
         })
     }
 
@@ -100,82 +110,89 @@ class UserProfile extends Component {
 
 
         return (
-            <div className='profile-form'>
+            <div>
 
-                
-                {this.state.uploading ?
-                <div className='image-div uploading-true'>
-                    <div></div>
-                    <div>
-                        <ReactS3Uploader
-                        signingUrl="/s3/sign"
-                        signingUrlMethod="GET"
-                        accept="image/*"
-                        s3path="pictures/"
-                        preprocess={this.onUploadStart}
-                        onSignedUrl={this.onSignedUrl}
-                        onProgress={this.onProgress}
-                        onError={this.onUploadError}
-                        onFinish={this.onFinish}
-                        signingUrlWithCredentials={ false }      // in case when need to pass authentication credentials via CORS
-                        uploadRequestHeaders={{ 'x-amz-acl': 'public-read' }}  // this is the default
-                        contentDisposition="auto"
-                        scrubFilename={(filename) => filename.replace(/[^\w\d_\-.]+/ig, '')}
-                        inputRef={cmp => this.uploadInput = cmp}
-                        autoUpload={true}
-                        className='image-uploader'
-                        />
-                        <button onClick={this.toggleUpload} className='cancel-button'>Cancel</button>
-                    </div>
-                </div>
+                {this.state.errorMessage ?
+                <div className='error-message-div'><p>{this.state.errorMessage}</p><button onClick={this.handleErrorClick} className='error-button'>X</button></div>
                 :
-                this.state.user.profileimage ?
-                <div className='image-div'>
-                    <img src={`${this.state.user.profileimage}`} alt='' className='user-image' />
-                    <button onClick={this.toggleUpload} className='upload-button'>Upload new picture</button>
-                </div>
-                :
-                <div className='image-div'>
-                    <img src='https://www.gannett-cdn.com/-mm-/eb9153ef471ec1cb22faf645d7d063754d336115/c=0-330-2006-3000&r=2006x2670/local/-/media/USATODAY/test/2013/08/09/1376068652000-mmiin07p.jpg?width=534&height=712&fit=crop' alt='' className='user-image' />
-                    <button onClick={this.toggleUpload} className='upload-button'>Upload new picture</button>
-                </div>}
-                
+                <div></div>}
 
-                <div className='profile-info'>
-                    {this.state.editing ?
-                    <div >
-                        <div className='editing'>
-                            <div>
-                                <h2 className='profile-form-item'>Username: </h2>
-                                <input onChange={e => this.handleChange(e.target.value)} value={this.state.userName} onKeyPress={this.handleKeyPress} className='edit-input' />
-                            </div>
-                            <div>
-                                <button onClick={() => this.updateUsername(this.state.userName)} className='update-button'>Save</button>
-                                <button onClick={this.handleCancel} className='update-button'>Cancel</button>
-                            </div>
+                <div className='profile-form'>
+
+                    {this.state.uploading ?
+                    <div className='image-div uploading-true'>
+                        <div></div>
+                        <div>
+                            <ReactS3Uploader
+                            signingUrl="/s3/sign"
+                            signingUrlMethod="GET"
+                            accept="image/*"
+                            s3path="pictures/"
+                            preprocess={this.onUploadStart}
+                            onSignedUrl={this.onSignedUrl}
+                            onProgress={this.onProgress}
+                            onError={this.onUploadError}
+                            onFinish={this.onFinish}
+                            signingUrlWithCredentials={ false }      // in case when need to pass authentication credentials via CORS
+                            uploadRequestHeaders={{ 'x-amz-acl': 'public-read' }}  // this is the default
+                            contentDisposition="auto"
+                            scrubFilename={(filename) => filename.replace(/[^\w\d_\-.]+/ig, '')}
+                            inputRef={cmp => this.uploadInput = cmp}
+                            autoUpload={true}
+                            className='image-uploader'
+                            />
+                            <button onClick={this.toggleUpload} className='cancel-button'>Cancel</button>
                         </div>
                     </div>
                     :
-                    <div className='not-editing'>
-                        <div>
-                            <h2 className='profile-form-item'>Username: </h2>
-                            <h3 className='profile-form-item'>{this.state.user.username}</h3>
-                        </div>
-                        <button className='edit-button' onClick={this.toggleEdit}><i className="fas fa-edit"></i></button>
-                    </div>}
-                </div>
-
-                <div className='profile-info'>
-                    <div>
-                        <h2 className='profile-form-item'>Email: </h2>
-                        <h3 className='profile-form-item'>{this.state.user.email}</h3>
+                    this.state.user.profileimage ?
+                    <div className='image-div'>
+                        <img src={`${this.state.user.profileimage}`} alt='' className='user-image' />
+                        <button onClick={this.toggleUpload} className='upload-button'>Upload new picture</button>
                     </div>
+                    :
+                    <div className='image-div'>
+                        <img src='https://www.gannett-cdn.com/-mm-/eb9153ef471ec1cb22faf645d7d063754d336115/c=0-330-2006-3000&r=2006x2670/local/-/media/USATODAY/test/2013/08/09/1376068652000-mmiin07p.jpg?width=534&height=712&fit=crop' alt='' className='user-image' />
+                        <button onClick={this.toggleUpload} className='upload-button'>Upload new picture</button>
+                    </div>}
+                    
+
+                    <div className='profile-info'>
+                        {this.state.editing ?
+                        <div >
+                            <div className='editing'>
+                                <div>
+                                    <h2 className='profile-form-item'>Username: </h2>
+                                    <input onChange={e => this.handleChange(e.target.value)} value={this.state.userName} onKeyPress={this.handleKeyPress} className='edit-input' />
+                                </div>
+                                <div>
+                                    <button onClick={() => this.updateUsername(this.state.userName)} className='update-button'>Save</button>
+                                    <button onClick={this.handleCancel} className='update-button'>Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        :
+                        <div className='not-editing'>
+                            <div>
+                                <h2 className='profile-form-item'>Username: </h2>
+                                <h3 className='profile-form-item'>{this.state.user.username}</h3>
+                            </div>
+                            <button className='edit-button' onClick={this.toggleEdit}><i className="fas fa-edit"></i></button>
+                        </div>}
+                    </div>
+
+                    <div className='profile-info'>
+                        <div>
+                            <h2 className='profile-form-item'>Email: </h2>
+                            <h3 className='profile-form-item'>{this.state.user.email}</h3>
+                        </div>
+                    </div>
+
+
+
+                    <button className='logout-button mobile-logout-button' onClick={this.userLoggedOut}>Log out</button>
+
                 </div>
-
-
-
-                <button className='logout-button mobile-logout-button' onClick={this.userLoggedOut}>Log out</button>
-
             </div>
         )
     }

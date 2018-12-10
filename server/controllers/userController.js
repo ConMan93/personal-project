@@ -7,6 +7,10 @@ module.exports = {
             let db = req.app.get('db')
             let { username, id } = req.body
 
+            if (username.length <= 3) {
+                return res.status(409).send('Username must be 4 or more characters long.')
+            }
+
             let response = await db.updateUsername({username, id})
             let updatedUsername = response[0]
             delete updatedUsername.hash
